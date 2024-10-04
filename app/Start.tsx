@@ -10,8 +10,24 @@ import Level5 from '../assets/images/Level5.png'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 let val = '';
 function Start() {
+  let fix
   let [value, setvalue] = useState('');
-  let [I, setI] = useState(0);
+  let [LVL, setLVL] = useState("")
+
+  let gets = async () => {
+    try {
+      let values = await AsyncStorage.getItem("Complate")
+
+      fix = await JSON.parse(values);
+      fix = fix === undefined || '' ? 0 : fix;
+
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  gets()
+  let [I, setI] = useState(fix);
+
 
   let LevelImages = [
     { Url: Level1, Ans: '59119', Level: 'Level 1' },
@@ -34,17 +50,6 @@ function Start() {
   let Enter = () => {
     if (value === LevelImages[I].Ans) {
       setI(I + 1)
-      // let storeData =async ()=>{
-      //   try{
-      //       await AsyncStorage.setItem(
-      //         I+1
-      //       )
-      //   }catch(error){
-      //     console.log(error)
-      //   }
-      // }
-      // storeData();
-
       let data = I + 1;
       let store = async (datas) => {
         try {
@@ -76,6 +81,9 @@ function Start() {
                 </View>
                 <View style={style.center}>
                   <Image source={LevelImages[I].Url} style={style.img} />
+                </View>
+                <View>
+
                 </View>
               </View>
               <View style={style.input}>

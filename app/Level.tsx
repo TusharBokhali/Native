@@ -1,21 +1,24 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
+import { Link } from 'expo-router';
 
-function Level() {
+
+function Level({ }) {
 
   let [up, setUp] = useState("")
 
   let dublicate = [];
-  for (let i = 1; i <= 50; i++) {
+  for (let i = 1; i <= 20; i++) {
     dublicate.push(i)
   }
   let [levele, setlevel] = useState(dublicate)
 
   let ComplateData = async () => {
     try {
-      let values = AsyncStorage.getItem("Data")
-      // setUp(value)
+      let values = await AsyncStorage.getItem("Data")
+      let fix = JSON.parse(values)
+      setUp(fix+1)
 
     } catch (e) {
       console.log(e);
@@ -23,6 +26,23 @@ function Level() {
     }
   }
   ComplateData()
+
+  let StartGame = (e) =>{
+    if(e<=up)
+    {
+
+      let store = async (e) => {
+        try {
+          await AsyncStorage.setItem("Complate", e)
+        } catch (error) {
+          console.log(error)
+        }
+      };
+      store(e);
+    }else{
+      alert("Level not Compalte!")
+    }
+  }
   return (
 
     <>
@@ -34,9 +54,14 @@ function Level() {
               levele.map((el, inx) => {
                 return (
                   <View key={inx}>
-                    <Pressable style={style.button} >
-                      <Text style={style.text} onPress={() => { alert(`Click Button ${el}`) }}>{el}</Text>
+                    <Link href={{
+                      pathname: "/Start",
+                      params:{num:el}
+                      }}>
+                    <Pressable style={up >= el ? style.active:style.button}  >
+                      <Text style={style.text} onPress={() => {StartGame(el)}}>{el}</Text>
                     </Pressable>
+                    </Link>
                   </View>
                 )
               })
@@ -75,6 +100,16 @@ const style = StyleSheet.create({
     borderRadius: 4,
     elevation: 3,
     backgroundColor: '#272727',
+    width: 50,
+    height: 50,
+    margin: 5,
+  },
+  active:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: 'green',
     width: 50,
     height: 50,
     margin: 5,

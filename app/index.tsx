@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet, Pressable, Alert, } from 'react-native';
 import { Link } from 'expo-router';
-function First(navigation) {
+function First(navigations) {
   return (
     <>
       <View style={style.main}>
@@ -10,17 +10,17 @@ function First(navigation) {
           <Text style={style.text1}>1.0.0</Text>
         </View>
         <View style={style.screen}>
-          <Link href={"/First"}>
-            <Pressable style={style.button} onPress={() => { navigation.navigation("First") }}>
-              <Text style={style.text} >Continue</Text>
-            </Pressable>
-          </Link>
-          <Link href={"/Start"} onPress={() => { navigation.navigation("Start") }}>
+            <Link href={"/index"}>
+              <Pressable style={style.button}>
+                <Text style={style.text} >Continue</Text>
+              </Pressable>
+            </Link>
+          <Link href={"/Start"} onPress={() => { navigations.navigation("Start") }}>
             <Pressable style={style.button} >
-              <Text style={style.text}>Start</Text>
+              <Text style={style.text}>Start</Text> 
             </Pressable>
           </Link>
-          <Link href={"/Level"} onPress={() => { navigation.navigation("Level") }}>
+          <Link href={"/Level"} onPress={() => { navigations.navigation("Level") }}>
             <Pressable style={style.button} >
               <Text style={style.text}>Level</Text>
             </Pressable>
