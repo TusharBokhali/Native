@@ -4,7 +4,7 @@ import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { Link } from 'expo-router';
 
 
-function Level({ }) {
+function Level() {
 
   let [up, setUp] = useState("")
 
@@ -30,10 +30,12 @@ function Level({ }) {
   let StartGame = (e) =>{
     if(e<=up)
     {
+      
 
       let store = async (e) => {
         try {
           await AsyncStorage.setItem("Complate", e)
+
         } catch (error) {
           console.log(error)
         }

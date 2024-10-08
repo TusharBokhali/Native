@@ -1,30 +1,30 @@
 import { Text, View, StyleSheet, Pressable, Alert, } from 'react-native';
 import { Link } from 'expo-router';
-function First(navigations) {
+function First({ navigation }) {
   return (
     <>
       <View style={style.main}>
         <View style={style.About}>
           <Text style={style.text1}>Math Puzzle</Text>
           <Text style={style.text1}>Version</Text>
-          <Text style={style.text1}>1.0.0</Text>
+          <Text style={style.ver}>1.0.0</Text>
         </View>
         <View style={style.screen}>
-            <Link href={"/index"}>
-              <Pressable style={style.button}>
-                <Text style={style.text} >Continue</Text>
-              </Pressable>
-            </Link>
-          <Link href={"/Start"} onPress={() => { navigations.navigation("Start") }}>
-            <Pressable style={style.button} >
-              <Text style={style.text}>Start</Text> 
-            </Pressable>
-          </Link>
-          <Link href={"/Level"} onPress={() => { navigations.navigation("Level") }}>
-            <Pressable style={style.button} >
-              <Text style={style.text}>Level</Text>
-            </Pressable>
-          </Link>
+          {/* <Link href={"/Start"} > */}
+          <Pressable style={style.button} onPress={() => { navigation.navigate('Start') }}>
+            <Text style={style.text}>Start</Text>
+          </Pressable>
+          {/* </Link> */}
+          {/* <Link href={"/Level"} > */}
+          <Pressable style={style.button} onPress={() => { navigation.navigate('Level') }}>
+            <Text style={style.text}>Level</Text>
+          </Pressable>
+          {/* </Link> */}
+          {/* <Link href={"/Start"}> */}
+          <Pressable style={style.button}>
+            <Text style={style.text} >Settings</Text>
+          </Pressable>
+          {/* </Link> */}
         </View>
       </View>
     </>
@@ -78,5 +78,9 @@ const style = StyleSheet.create({
     letterSpacing: 0.90,
     fontWeight: 'bold',
     color: 'white',
+  },
+  ver: {
+    fontSize: 14,
+    color: 'white'
   }
 })

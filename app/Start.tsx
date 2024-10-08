@@ -8,26 +8,26 @@ import Level3 from '../assets/images/Level3.webp'
 import Level4 from '../assets/images/Level4.png'
 import Level5 from '../assets/images/Level5.png'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Link } from 'expo-router';
+import NextCenter from './NextCenter';
 let val = '';
 function Start() {
-  let fix
   let [value, setvalue] = useState('');
-  let [LVL, setLVL] = useState("")
+  let [LVL, setLVL] = useState(0)
+  let [page, setpage] = useState(false)
+  let [I, setI] = useState(0);
 
   let gets = async () => {
     try {
-      let values = await AsyncStorage.getItem("Complate")
-
-      fix = await JSON.parse(values);
-      fix = fix === undefined || '' ? 0 : fix;
-
+      let values = Number(await AsyncStorage.getItem("Complate"))
+      setI(values-1)
     } catch (e) {
       console.log(e);
     }
   }
-  gets()
-  let [I, setI] = useState(fix);
-
+  useEffect(() => {
+  ` gets();`
+  },[])
 
   let LevelImages = [
     { Url: Level1, Ans: '59119', Level: 'Level 1' },
@@ -36,6 +36,7 @@ function Start() {
     { Url: Level4, Ans: '6', Level: 'Level 4' },
     { Url: Level5, Ans: '941', Level: 'Level 5' },
   ]
+
 
   let ValueSet = (el) => {
     val += el;
@@ -47,9 +48,11 @@ function Start() {
     setvalue("")
   }
 
+
   let Enter = () => {
     if (value === LevelImages[I].Ans) {
       setI(I + 1)
+      setpage(true)
       let data = I + 1;
       let store = async (datas) => {
         try {
@@ -59,9 +62,6 @@ function Start() {
         }
       };
 
-      console.log(store(data))
-
-      alert("Level Complate!");
     } else {
       alert("Answer Is Wrong!!")
     }
@@ -79,14 +79,24 @@ function Start() {
                 <View>
                   <Text style={style.headers}>{LevelImages[I].Level}</Text>
                 </View>
+                <View>
+                  {
+                    page === true ? <Link href={"/NextCenter"}>next</Link> : ''
+
+                  }
+                </View>
                 <View style={style.center}>
                   <Image source={LevelImages[I].Url} style={style.img} />
                 </View>
                 <View>
+                  <View>{
 
+                    LevelImages.length === I ? <Link href={"/Congration"}>
+                    </Link> : ""
+                  }</View>
                 </View>
               </View>
-              <View style={style.input}>
+              <View style={style.input} >
                 <TextInput style={style.inputs} placeholder='Enter' keyboardType="numeric" value={value} />
                 <View style={style.fixContent}>
                   <Pressable >
@@ -234,5 +244,16 @@ const style = StyleSheet.create({
     height: 200,
     marginHorizontal: 'auto',
     resizeMode: 'stretch',
+  },
+  diff: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 'auto',
+    resizeMode: 'stretch',
+    marginTop: 200,
+  },
+  none: {
+    display: 'none',
   }
 })
