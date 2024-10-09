@@ -1,37 +1,39 @@
-import { Text, View, StyleSheet, Pressable, Alert, } from 'react-native';
+import { Text, View, StyleSheet, Pressable, Alert } from 'react-native';
 import { Link } from 'expo-router';
-function First({ navigation }) {
-  return (
+function index({ navigation }) {
+
+  return (  
     <>
       <View style={style.main}>
+        
         <View style={style.About}>
           <Text style={style.text1}>Math Puzzle</Text>
           <Text style={style.text1}>Version</Text>
           <Text style={style.ver}>1.0.0</Text>
         </View>
         <View style={style.screen}>
-          {/* <Link href={"/Start"} > */}
-          <Pressable style={style.button} onPress={() => { navigation.navigate('Start') }}>
+          <Link href={"/Start"} >
+          <Pressable style={style.button} >
             <Text style={style.text}>Start</Text>
           </Pressable>
-          {/* </Link> */}
-          {/* <Link href={"/Level"} > */}
-          <Pressable style={style.button} onPress={() => { navigation.navigate('Level') }}>
+          </Link>
+          <Link href={"/Level"} >
+          <Pressable style={style.button} >
             <Text style={style.text}>Level</Text>
           </Pressable>
-          {/* </Link> */}
-          {/* <Link href={"/Start"}> */}
+          </Link>
+          <Link href={"/Start"}>
           <Pressable style={style.button}>
             <Text style={style.text} >Settings</Text>
           </Pressable>
-          {/* </Link> */}
+          </Link>
         </View>
       </View>
     </>
   )
 }
 
-export default First
+export default index
 
 const style = StyleSheet.create({
   main: {
@@ -60,13 +62,14 @@ const style = StyleSheet.create({
     borderRadius: 10,
     elevation: 3,
     backgroundColor: 'black',
-    width: '110%',
+    width: '100%',
+    margin:'auto',
     marginTop: 15,
-
+    
   },
   text: {
-    width: 100,
     textAlign: 'center',
+    width: 100,
     fontSize: 16,
     lineHeight: 21,
     fontWeight: 'bold',

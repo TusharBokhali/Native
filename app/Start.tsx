@@ -1,15 +1,32 @@
-import { Text, View, StyleSheet, Pressable, TextInput, Image } from 'react-native';
+import { Text, View, StyleSheet, Pressable, TextInput, Image , ImageBackground} from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useEffect, useState } from 'react';
-import Level1 from '../assets/images/Level1.webp'
-import Level2 from '../assets/images/Level2.webp'
-import Level3 from '../assets/images/Level3.webp'
-import Level4 from '../assets/images/Level4.png'
-import Level5 from '../assets/images/Level5.png'
+import p1 from '../assets/images/p1.png'
+import p2 from '../assets/images/p2.png'
+import p3 from '../assets/images/p3.png'
+import p4 from '../assets/images/p4.png'
+import p5 from '../assets/images/p5.png'
+import p6 from '../assets/images/p6.png'
+import p7 from '../assets/images/p7.png'
+import p8 from '../assets/images/p8.png'
+import p9 from '../assets/images/p9.png'
+import p10 from '../assets/images/p10.png'
+import p11 from '../assets/images/p11.png'
+import p12 from '../assets/images/p12.png'
+import p13 from '../assets/images/p13.png'
+import p14 from '../assets/images/p14.png'
+import p15 from '../assets/images/p15.png'
+import p16 from '../assets/images/p16.png'
+import p17 from '../assets/images/p17.png'
+import p18 from '../assets/images/p18.png'
+import p19 from '../assets/images/p19.png'
+import p20 from '../assets/images/p20.png'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Link } from 'expo-router';
 import NextCenter from './NextCenter';
+import Back from '../assets/images/gameplaybackground.jpg'
+import LVLLABEL from'../assets/images/level_board.png'
 let val = '';
 function Start() {
   let [value, setvalue] = useState('');
@@ -26,15 +43,30 @@ function Start() {
     }
   }
   useEffect(() => {
-  ` gets();`
+   gets();
   },[])
 
   let LevelImages = [
-    { Url: Level1, Ans: '59119', Level: 'Level 1' },
-    { Url: Level2, Ans: '12', Level: 'Level 2' },
-    { Url: Level3, Ans: '13111714', Level: 'Level 3' },
-    { Url: Level4, Ans: '6', Level: 'Level 4' },
-    { Url: Level5, Ans: '941', Level: 'Level 5' },
+    { Url: p1, Ans: '1', Level: 'Level 1' },
+    { Url: p2, Ans: '2', Level: 'Level 2' },
+    { Url: p3, Ans: '3', Level: 'Level 3' },
+    { Url: p4, Ans: '4', Level: 'Level 4' },
+    { Url: p5, Ans: '5', Level: 'Level 5' },
+    { Url: p6, Ans: '6', Level: 'Level 6' },
+    { Url: p7, Ans: '7', Level: 'Level 7' },
+    { Url: p8, Ans: '8', Level: 'Level 8' },
+    { Url: p9, Ans: '9', Level: 'Level 9' },
+    { Url: p10, Ans: '10', Level: 'Level 10' },
+    { Url: p11, Ans: '11', Level: 'Level 11' },
+    { Url: p12, Ans: '12', Level: 'Level 12' },
+    { Url: p13, Ans: '13', Level: 'Level 13' },
+    { Url: p14, Ans: '14', Level: 'Level 14' },
+    { Url: p15, Ans: '15', Level: 'Level 15' },
+    { Url: p16, Ans: '16', Level: 'Level 16' },
+    { Url: p17, Ans: '17', Level: 'Level 17' },
+    { Url: p18, Ans: '18', Level: 'Level 18' },
+    { Url: p19, Ans: '19', Level: 'Level 19' },
+    { Url: p20, Ans: '20', Level: 'Level 20' },
   ]
 
 
@@ -72,28 +104,21 @@ function Start() {
   return (
     <>
       <View style={style.main}>
+        <ImageBackground source={Back} style={style.main} resizeMode='stretch'>
+
         <View style={style.Content}>
           <View style={style.Descri}>
             <View style={style.member}>
               <View style={style.seen}>
-                <View>
+                <View style={style.flex}>
+                  <ImageBackground source={LVLLABEL} style={style.labelImage} resizeMode='stretch'>
                   <Text style={style.headers}>{LevelImages[I].Level}</Text>
-                </View>
-                <View>
-                  {
-                    page === true ? <Link href={"/NextCenter"}>next</Link> : ''
-
-                  }
+                  </ImageBackground>
                 </View>
                 <View style={style.center}>
                   <Image source={LevelImages[I].Url} style={style.img} />
                 </View>
-                <View>
-                  <View>{
-
-                    LevelImages.length === I ? <Link href={"/Congration"}>
-                    </Link> : ""
-                  }</View>
+                <View>  
                 </View>
               </View>
               <View style={style.input} >
@@ -149,6 +174,7 @@ function Start() {
             </View>
           </View>
         </View>
+                  </ImageBackground>
       </View>
     </>
   )
@@ -174,16 +200,21 @@ const style = StyleSheet.create({
   },
   member: {
     width: '100%',
-    height: '100%',
-    margin: 'auto',
+    height: '85%',
+    justifyContent:'space-between',
   },
-  seen: {
-    width: '100%',
-    height: '50%',
+ 
+  flex:{
+    alignItems:'center'
   },
   input: {
     width: '100%',
-    height: '50%',
+    backgroundColor:'#8080807d'
+  },
+  labelImage:{
+    width: 200,
+    height:70,
+    textAlign:'center'
   },
   inputs: {
     width: '100%',
@@ -195,7 +226,7 @@ const style = StyleSheet.create({
     shadowColor: 'white',
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.56,
-    shadowRadius: 5
+    shadowRadius: 5,
   },
   fixContent: {
     width: '100%',
@@ -207,8 +238,8 @@ const style = StyleSheet.create({
     marginTop: 20,
   },
   Buttons: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     backgroundColor: 'green',
     margin: 5,
     paddingHorizontal: 22,
@@ -218,21 +249,21 @@ const style = StyleSheet.create({
     borderRadius: 10,
   },
   icons: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     backgroundColor: 'green',
-    margin: 5,
-    paddingHorizontal: 15,
+    margin: 5,  
     color: 'white',
     fontSize: 22,
     alignContent: 'center',
+    textAlign:'center',
     borderRadius: 10,
   },
   headers: {
     fontSize: 28,
     fontWeight: '500',
     textAlign: 'center',
-    color: 'white'
+    marginTop:15,
   },
   center: {
     width: '100%',
@@ -240,8 +271,8 @@ const style = StyleSheet.create({
     justifyContent: 'center'
   },
   img: {
-    width: 200,
-    height: 200,
+    width: 400,
+    height: 400,
     marginHorizontal: 'auto',
     resizeMode: 'stretch',
   },
