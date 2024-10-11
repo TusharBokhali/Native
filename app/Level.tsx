@@ -2,10 +2,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { Link } from 'expo-router';
-
-
+import { useNavigation } from '@react-navigation/native';
 function Level() {
 
+  
+  const navigation = useNavigation();
+  console.log(navigation);
+-
   let [up, setUp] = useState("")
 
   let dublicate = [];

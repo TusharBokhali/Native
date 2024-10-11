@@ -5,7 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import nextCenter from './NextCenter';
+
 
 SplashScreen.preventAutoHideAsync();
 
@@ -28,9 +28,10 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-      <Stack.Screen name="index" options={{ title: 'Home' , headerShown:false}}  />
+      <Stack.Screen name="index" options={{ title: 'Start' , headerShown:false}}  />
       <Stack.Screen name="Level" options={{ title: 'Level', headerShown:false}} />
       <Stack.Screen name="Start" options={{ title: 'Start', headerShown:false}} />
+      <Stack.Screen name="NextCenter" options={{ title: 'NextCenter', headerShown:false}} />
       </Stack>
     </ThemeProvider>
   );

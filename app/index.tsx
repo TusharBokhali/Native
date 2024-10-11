@@ -1,7 +1,11 @@
 import { Text, View, StyleSheet, Pressable, Alert } from 'react-native';
 import { Link } from 'expo-router';
-function index({ navigation }) {
+import { useNavigation } from '@react-navigation/native';
+function index() {
 
+  const navigation = useNavigation();
+  console.log(navigation);
+  
   return (  
     <>
       <View style={style.main}>
@@ -12,21 +16,21 @@ function index({ navigation }) {
           <Text style={style.ver}>1.0.0</Text>
         </View>
         <View style={style.screen}>
-          <Link href={"/Start"} >
-          <Pressable style={style.button} >
+          {/* <Link href={"/Start"} > */}
+          <Pressable style={style.button} onPress={()=>{navigation.navigate('Start')}}>
             <Text style={style.text}>Start</Text>
           </Pressable>
-          </Link>
-          <Link href={"/Level"} >
-          <Pressable style={style.button} >
+          {/* </Link> */}
+          {/* <Link href={"/Level"} > */}
+          <Pressable style={style.button} onPress={()=>{navigation.navigate('Level')}}>
             <Text style={style.text}>Level</Text>
           </Pressable>
-          </Link>
-          <Link href={"/Start"}>
-          <Pressable style={style.button}>
+          {/* </Link> */}
+          {/* <Link href={"/Start"}> */}
+          <Pressable style={style.button} onPress={()=>{navigation.navigate('Start')}}>
             <Text style={style.text} >Settings</Text>
           </Pressable>
-          </Link>
+          {/* </Link> */}
         </View>
       </View>
     </>
@@ -50,7 +54,7 @@ const style = StyleSheet.create({
   screen: {
     width: '80%',
     margin: 'auto',
-    height: '100%',
+    // height: '100%',
     alignItems: 'center',
     marginTop: 100,
   },

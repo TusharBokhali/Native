@@ -26,6 +26,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Link } from 'expo-router';
 import NextCenter from './NextCenter';
 import Back from '../assets/images/gameplaybackground.jpg'
+import { useNavigation } from '@react-navigation/native';
 import LVLLABEL from'../assets/images/level_board.png'
 let val = '';
 function Start() {
@@ -36,8 +37,8 @@ function Start() {
 
   let gets = async () => {
     try {
-      let values = Number(await AsyncStorage.getItem("Complate"))
-      setI(values-1)
+      let values = Number(await AsyncStorage.getItem("Data"))
+      setI(values)
     } catch (e) {
       console.log(e);
     }
@@ -45,7 +46,8 @@ function Start() {
   useEffect(() => {
    gets();
   },[])
-
+  const navigation = useNavigation();
+  
   let LevelImages = [
     { Url: p1, Ans: '1', Level: 'Level 1' },
     { Url: p2, Ans: '2', Level: 'Level 2' },
@@ -84,7 +86,7 @@ function Start() {
   let Enter = () => {
     if (value === LevelImages[I].Ans) {
       setI(I + 1)
-      setpage(true)
+      
       let data = I + 1;
       let store = async (datas) => {
         try {
@@ -93,7 +95,8 @@ function Start() {
           console.log(error)
         }
       };
-
+store(data)
+navigation.navigate('NextCenter')
     } else {
       alert("Answer Is Wrong!!")
     }
@@ -101,15 +104,21 @@ function Start() {
     setvalue("")
   }
 
+  let Skip = () => {
+    setI(I+1);
+  }
+
   return (
     <>
       <View style={style.main}>
         <ImageBackground source={Back} style={style.main} resizeMode='stretch'>
-
+                  <Ionicons name="play-skip-forward-sharp" size={24} color="white"  style={style.Shift} onPress={Skip}/>
         <View style={style.Content}>
           <View style={style.Descri}>
             <View style={style.member}>
-              <View style={style.seen}>
+              <View>
+                <View>
+                </View>
                 <View style={style.flex}>
                   <ImageBackground source={LVLLABEL} style={style.labelImage} resizeMode='stretch'>
                   <Text style={style.headers}>{LevelImages[I].Level}</Text>
@@ -286,5 +295,9 @@ const style = StyleSheet.create({
   },
   none: {
     display: 'none',
+  },
+  Shift:{
+    margin:10,
+    textAlign:'right',
   }
 })
