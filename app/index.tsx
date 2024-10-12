@@ -27,7 +27,7 @@ function index() {
           </Pressable>
           {/* </Link> */}
           {/* <Link href={"/Start"}> */}
-          <Pressable style={style.button} onPress={()=>{navigation.navigate('Start')}}>
+          <Pressable style={style.button} onPress={()=>{navigation.navigate('Settings')}}>
             <Text style={style.text} >Settings</Text>
           </Pressable>
           {/* </Link> */}

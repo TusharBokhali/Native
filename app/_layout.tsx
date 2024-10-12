@@ -32,6 +32,9 @@ export default function RootLayout() {
       <Stack.Screen name="Level" options={{ title: 'Level', headerShown:false}} />
       <Stack.Screen name="Start" options={{ title: 'Start', headerShown:false}} />
       <Stack.Screen name="NextCenter" options={{ title: 'NextCenter', headerShown:false}} />
+      <Stack.Screen name="Congration" options={{ title: 'Congration', headerShown:false}} />
+      <Stack.Screen name="Settings" options={{ title: 'Settings', headerShown:false}} />
+      <Stack.Screen name="About" options={{ title: 'About', headerShown:false}} />
       </Stack>
     </ThemeProvider>
   );

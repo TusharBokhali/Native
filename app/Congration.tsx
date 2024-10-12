@@ -18,9 +18,11 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     views:{
-        width:'80%',
-        height:'80%',
+        width:'70%',
+        height:'70%',
         textAlign:'center',
-        alignItems:'center'
+        alignItems:'center',
+        justifyContent:'center',
+        margin:'auto'
     }
 })

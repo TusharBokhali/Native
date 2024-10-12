@@ -2,9 +2,11 @@ import { View, Text , StyleSheet,Pressable , Image} from 'react-native'
 import React from 'react'
 import {SafeAreaView} from 'react-native-safe-area-context'
 import { Link } from 'expo-router';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import Win from '../assets/images/LevelWinsori-removebg-preview.png'
 
 export default function nextCenter() {
+  const navigation = useNavigation();
   return (
   
      <SafeAreaView style={styles.container}>
@@ -13,20 +15,15 @@ export default function nextCenter() {
             <Image source={Win} style={styles.imgaes}/>
             </View>
             <View style={styles.flex}>
-
             <View>
-                <Link href={"/"}>
-                    <Pressable style={styles.button}>
+                    <Pressable style={styles.button} onPress={()=>{navigation.navigate("index")}}> 
                         <Text style={styles.Text}>Back</Text>
                     </Pressable>
-                </Link>
             </View>
             <View>
-            <Link href={"/Start"}>
-                <Pressable style={styles.button}>    
+                <Pressable style={styles.button} onPress={()=>{navigation.navigate('Start')}}>    
                     <Text style={styles.Text}>Next</Text>
                 </Pressable>
-            </Link>
             
             </View>
             </View>
@@ -45,7 +42,6 @@ const styles = StyleSheet.create({
         justifyContent:'space-around',
         alignItems:'center',
         backgroundColor:'#5a4e4e',
-        // flexDirection:'row',
         marginHorizontal:'auto',
     },
     imgaes:{
