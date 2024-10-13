@@ -55,14 +55,14 @@ function Start() {
   const navigation = useNavigation();
 
   let LevelImages = [
-    { Url: p1, Ans: '1', Level: 'Level 1' },
-    { Url: p2, Ans: '2', Level: 'Level 2' },
-    { Url: p3, Ans: '3', Level: 'Level 3' },
+    { Url: p1, Ans: '10', Level: 'Level 1' },
+    { Url: p2, Ans: '25', Level: 'Level 2' },
+    { Url: p3, Ans: '6', Level: 'Level 3' },
     { Url: p4, Ans: '4', Level: 'Level 4' },
-    { Url: p5, Ans: '5', Level: 'Level 5' },
+    { Url: p5, Ans: '128', Level: 'Level 5' },
     { Url: p6, Ans: '6', Level: 'Level 6' },
-    { Url: p7, Ans: '7', Level: 'Level 7' },
-    { Url: p8, Ans: '8', Level: 'Level 8' },
+    { Url: p7, Ans: '50', Level: 'Level 7' },
+    { Url: p8, Ans: '1020', Level: 'Level 8' },
     { Url: p9, Ans: '9', Level: 'Level 9' },
     { Url: p10, Ans: '10', Level: 'Level 10' },
     { Url: p11, Ans: '11', Level: 'Level 11' },
@@ -97,7 +97,7 @@ function Start() {
 
       let data = I + 1;
       let store = async (datas) => {
-        if (check !== "") {
+        if (check < I) {
           try {
             await AsyncStorage.setItem("Data", datas)
           } catch (error) {
@@ -132,88 +132,88 @@ function Start() {
 
   return (
     <>
-    <SafeAreaView style= { style.continer } >
-    <View style={ style.main }>
-      <ImageBackground source={ Back } style = { style.main } resizeMode = 'stretch' >
-        <View style={ style.flexs }>
-          <FontAwesome5 name="backward" size = { 24} color = "white" onPress = {()=> { navigation.navigate('index') }
-}/>
-  < Ionicons name = "play-skip-forward-sharp" size = { 24} color = "white" style = { style.Shift } onPress = { Skip } />
-    </View>
-    < View style = { style.Content } >
-      <View style={ style.Descri }>
-        <View style={ style.member }>
-          <View>
-          <View>
-          </View>
-          < View style = { style.flex } >
-            <ImageBackground source={ LVLLABEL } style = { style.labelImage } resizeMode = 'stretch' >
-              <Text style={ style.headers }> { LevelImages[I].Level } </Text>
-                </ImageBackground>
-                </View>
-                < View style = { style.center } >
-                  <Image source={ LevelImages[I].Url } style = { style.img } />
+      <SafeAreaView style={style.continer} >
+        <View style={style.main}>
+          <ImageBackground source={Back} style={style.main} resizeMode='stretch' >
+            <View style={style.flexs}>
+              <FontAwesome5 name="backward" size={24} color="white" onPress={() => { navigation.navigate('index') }
+              } />
+              < Ionicons name="play-skip-forward-sharp" size={24} color="white" style={style.Shift} onPress={Skip} />
+            </View>
+            < View style={style.Content} >
+              <View style={style.Descri}>
+                <View style={style.member}>
+                  <View>
+                    <View>
+                    </View>
+                    < View style={style.flex} >
+                      <ImageBackground source={LVLLABEL} style={style.labelImage} resizeMode='stretch' >
+                        <Text style={style.headers}> {LevelImages[I].Level} </Text>
+                      </ImageBackground>
+                    </View>
+                    < View style={style.center} >
+                      <Image source={LevelImages[I].Url} style={style.img} />
                     </View>
                     < View >
                     </View>
+                  </View>
+                  < View style={style.input} >
+                    <TextInput style={style.inputs} placeholder='Enter' keyboardType="numeric" value={value} maxLength={5}/>
+                    <View style={style.fixContent}>
+                      <Pressable>
+                        <Text style={style.Buttons} onPress={() => { ValueSet('9') }}> 9 </Text>
+                      </Pressable>
+
+                      < Pressable >
+                        <Text style={style.Buttons} onPress={() => { ValueSet('8') }}> 8 </Text>
+                      </Pressable>
+
+
+                      < Pressable >
+                        <Text style={style.Buttons} onPress={() => { ValueSet('7') }}> 7 </Text>
+                      </Pressable>
+
+                      < Pressable >
+                        <Text style={style.Buttons} onPress={() => { ValueSet('6') }}> 6 </Text>
+                      </Pressable>
+
+                      < Pressable >
+                        <Text style={style.Buttons} onPress={() => { ValueSet('5') }}> 5 </Text>
+                      </Pressable>
+                      < Pressable >
+                        <Text style={style.Buttons} onPress={() => { ValueSet('4') }}> 4 </Text>
+                      </Pressable>
+                      < Pressable >
+                        <Text style={style.Buttons} onPress={() => { ValueSet('3') }}> 3 </Text>
+                      </Pressable>
+                      < Pressable >
+                        <Text style={style.Buttons} onPress={() => { ValueSet('2') }}> 2 </Text>
+                      </Pressable>
+                      < Pressable >
+                        <Text style={style.Buttons} onPress={() => { ValueSet('1') }}> 1 </Text>
+                      </Pressable>
+                      < Pressable >
+                        <Text style={style.Buttons} onPress={() => { ValueSet('0') }}> 0 </Text>
+                      </Pressable>
+                      < Pressable >
+                        <Text style={style.icons} onPress={cleaner} >
+                          <Ionicons name="close" size={24} color="white" />
+                        </Text>
+                      </Pressable>
+                      < Pressable >
+                        <Text style={style.icons}>
+                          <AntDesign name="enter" size={24} color="white" onPress={Enter} />
+                        </Text>
+                      </Pressable>
                     </View>
-                    < View style = { style.input } >
-                      <TextInput style={ style.inputs } placeholder = 'Enter' keyboardType = "numeric"  value = { value } />
-                        <View style={ style.fixContent }>
-                          <Pressable>
-                          <Text style={ style.Buttons } onPress = {() => { ValueSet('9') }}> 9 </Text>
-                            </Pressable>
-
-                            < Pressable >
-                            <Text style={ style.Buttons } onPress = {() => { ValueSet('8') }}> 8 </Text>
-                              </Pressable>
-
-
-                              < Pressable >
-                              <Text style={ style.Buttons } onPress = {() => { ValueSet('7') }}> 7 </Text>
-                                </Pressable>
-
-                                < Pressable >
-                                <Text style={ style.Buttons } onPress = {() => { ValueSet('6') }}> 6 </Text>
-                                  </Pressable>
-
-                                  < Pressable >
-                                  <Text style={ style.Buttons } onPress = {() => { ValueSet('5') }}> 5 </Text>
-                                    </Pressable>
-                                    < Pressable >
-                                    <Text style={ style.Buttons } onPress = {() => { ValueSet('4') }}> 4 </Text>
-                                      </Pressable>
-                                      < Pressable >
-                                      <Text style={ style.Buttons } onPress = {() => { ValueSet('3') }}> 3 </Text>
-                                        </Pressable>
-                                        < Pressable >
-                                        <Text style={ style.Buttons } onPress = {() => { ValueSet('2') }}> 2 </Text>
-                                          </Pressable>
-                                          < Pressable >
-                                          <Text style={ style.Buttons } onPress = {() => { ValueSet('1') }}> 1 </Text>
-                                            </Pressable>
-                                            < Pressable >
-                                            <Text style={ style.Buttons } onPress = {() => { ValueSet('0') }}> 0 </Text>
-                                              </Pressable>
-                                              < Pressable >
-                                              <Text style={ style.icons } onPress = { cleaner } >
-                                                <Ionicons name="close" size = { 24} color = "white" />
-                                                  </Text>
-                                                  </Pressable>
-                                                  < Pressable >
-                                                  <Text style={ style.icons }>
-                                                    <AntDesign name="enter" size = { 24} color = "white" onPress = { Enter } />
-                                                      </Text>
-                                                      </Pressable>
-                                                      </View>
-                                                      </View>
-                                                      </View>
-                                                      </View>
-                                                      </View>
-                                                      </ImageBackground>
-                                                      </View>
-                                                      </SafeAreaView>
-                                                      </>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </ImageBackground>
+        </View>
+      </SafeAreaView>
+    </>
   )
 }
 
@@ -241,7 +241,7 @@ const style = StyleSheet.create({
   member: {
     width: '100%',
     height: '85%',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
   },
 
   flex: {
@@ -282,7 +282,7 @@ const style = StyleSheet.create({
     height: 50,
     backgroundColor: 'green',
     margin: 5,
-    paddingHorizontal: 22,
+    paddingHorizontal: 10,
     color: 'white',
     fontSize: 26,
     alignContent: 'center',

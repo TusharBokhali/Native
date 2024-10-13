@@ -56,6 +56,7 @@ useEffect(()=>{
       alert("Level not Compalte!")
     }
   }
+  // (skips.includes(el)) ? style.skip: (up >= el) ? style.active : style.button
   return (
     <>
     <SafeAreaView style={style.container}>
@@ -68,7 +69,7 @@ useEffect(()=>{
               levele.map((el, inx) => {
                 return (
                   <View key={inx}>
-                    <Pressable style={(skips.includes(el)) ? style.skip: (up >= el) ? style.active : style.button}  >
+                    <Pressable style={(skips[el]!==null || skips[el]!=="") ? skips.includes(`${el}`) ? style.skip : (up>=el ? style.active : style.button):(up>=el ? style.active: style.button)}  >
                       <Text style={style.text} onPress={() => {StartGame(el)}}>{el}</Text>
                     </Pressable>
                   </View> 

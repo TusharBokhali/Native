@@ -44,19 +44,19 @@ const style = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: '#444343',
+    justifyContent:'center',
+    alignItems:'center',
   },
   About: {
     width: '100%',
     textAlign: 'center',
     alignItems: 'center',
+  
     marginTop: 100,
   },
   screen: {
     width: '80%',
     margin: 'auto',
-    // height: '100%',
-    alignItems: 'center',
-    marginTop: 100,
   },
   button: {
     alignItems: 'center',
