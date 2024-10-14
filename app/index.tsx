@@ -4,12 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 function index() {
 
   const navigation = useNavigation();
-  console.log(navigation);
-  
-  return (  
+
+  return (
     <>
       <View style={style.main}>
-        
+
         <View style={style.About}>
           <Text style={style.text1}>Math Puzzle</Text>
           <Text style={style.text1}>Version</Text>
@@ -17,17 +16,17 @@ function index() {
         </View>
         <View style={style.screen}>
           {/* <Link href={"/Start"} > */}
-          <Pressable style={style.button} onPress={()=>{navigation.navigate('Start')}}>
+          <Pressable style={style.button} onPress={() => { navigation.navigate('Start') }}>
             <Text style={style.text}>Start</Text>
           </Pressable>
           {/* </Link> */}
           {/* <Link href={"/Level"} > */}
-          <Pressable style={style.button} onPress={()=>{navigation.navigate('Level')}}>
+          <Pressable style={style.button} onPress={() => { navigation.navigate('Level') }}>
             <Text style={style.text}>Level</Text>
           </Pressable>
           {/* </Link> */}
           {/* <Link href={"/Start"}> */}
-          <Pressable style={style.button} onPress={()=>{navigation.navigate('Settings')}}>
+          <Pressable style={style.button} onPress={() => { navigation.navigate('Settings') }}>
             <Text style={style.text} >Settings</Text>
           </Pressable>
           {/* </Link> */}
@@ -44,14 +43,14 @@ const style = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: '#444343',
-    justifyContent:'center',
-    alignItems:'center',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   About: {
     width: '100%',
     textAlign: 'center',
     alignItems: 'center',
-  
+
     marginTop: 100,
   },
   screen: {
@@ -67,9 +66,9 @@ const style = StyleSheet.create({
     elevation: 3,
     backgroundColor: 'black',
     width: '100%',
-    margin:'auto',
+    margin: 'auto',
     marginTop: 15,
-    
+
   },
   text: {
     textAlign: 'center',

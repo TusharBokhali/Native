@@ -97,9 +97,11 @@ function Start() {
 
       let data = I + 1;
       let store = async (datas) => {
-        if (check < I) {
+        console.log(I);
+
+        if (check <= I || I == 0) {
           try {
-            await AsyncStorage.setItem("Data", datas)
+            await AsyncStorage.setItem("Data", `${datas}`)
           } catch (error) {
             console.log(error)
           }
@@ -158,7 +160,7 @@ function Start() {
                     </View>
                   </View>
                   < View style={style.input} >
-                    <TextInput style={style.inputs} placeholder='Enter' keyboardType="numeric" value={value} maxLength={5}/>
+                    <TextInput style={style.inputs} placeholder='Enter' keyboardType="numeric" value={value} maxLength={5} />
                     <View style={style.fixContent}>
                       <Pressable>
                         <Text style={style.Buttons} onPress={() => { ValueSet('9') }}> 9 </Text>
