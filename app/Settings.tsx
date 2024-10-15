@@ -11,6 +11,28 @@ const Settings = () => {
     let Reset = () =>{
         (async ()=>{
             let per = confirm("Game Reset Sure!");
+            Alert.alert(
+                'Confirm',
+                'Are you sure you want to do this?',
+                [
+                  {
+                    text: 'No',
+                    onPress: () => alert('Game Not Reset!'),
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'Yes',
+                    onPress: () => { try{
+                        AsyncStorage.clear(); 
+                        alert("Game Success Fully Reset!");
+                    }catch(e){
+                        console.log(e);   
+                    }},
+                  },
+                ],
+                { cancelable: false }
+              );
+            // }
             if(per)
                 {
                 try{

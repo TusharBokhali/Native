@@ -8,41 +8,31 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 let is = 0;
 function Level() {
-  let [skips, setSkips] = useState<number[]>([])
+  let [Data, setData] = useState([]);
+  let [space,setspace] = useState([])
   let getItems = async () => {
-    let dub = [...skips]
-    let skip = await AsyncStorage.getItem("Skip");
-    dub[is++] = skip;
-    setSkips(dub);
+    
+    let object = await AsyncStorage.getItem("Data")
+    let obj = JSON.parse(object)
+   
+    let spaces = await AsyncStorage.getItem("SKIP")
+    let real = JSON.parse(spaces)
+   setspace(real)
+    setData(obj)
   }
-
   useEffect(() => {
     getItems()
-  }, [])
-
+  },[])
   const navigation = useNavigation();
-
   let [up, setUp] = useState("")
-
   let dublicate = [];
   for (let i = 1; i <= 20; i++) {
     dublicate.push(i)
   }
-
   let [levele, setlevel] = useState(dublicate)
-
-  let ComplateData = async () => {
-    try {
-      let values = await AsyncStorage.getItem("Data")
-      let fix = JSON.parse(values)
-      setUp(fix + 1)
-    } catch (e) {
-      console.log(e);
-    }
-  }
-  ComplateData();
   let StartGame = (e) => {
-    if (e <= up) {
+    
+    if (e <= Data.Current) {
       let store = async (e) => {
         try {
           await AsyncStorage.setItem("Complate", e);
@@ -56,7 +46,6 @@ function Level() {
       alert("Level not Compalte!")
     }
   }
-  // (skips.includes(el)) ? style.skip: (up >= el) ? style.active : style.button
   return (
     <>
       <SafeAreaView style={style.container}>
@@ -64,12 +53,13 @@ function Level() {
           <FontAwesome5 name="backward" size={24} color="white" style={style.Back} onPress={() => { navigation.navigate('index') }} />
           <View style={style.Content}>
             <Text style={style.Heading}>Level</Text>
+               
             <View style={style.flex}>
               {
                 levele.map((el, inx) => {
                   return (
                     <View key={inx}>
-                      <Pressable style={(skips[0] !== null && skips.length) ? (skips[0].includes(el) ? style.skip : (up >= el.toString() ? style.active : style.button)) : (up >= el.toString() ? style.active : style.button)}  >
+                      <Pressable style={ style.button  }>
                         <Text style={style.text} onPress={() => { StartGame(el) }}>{el}</Text>
                       </Pressable>
                     </View>
@@ -94,6 +84,16 @@ const style = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: '#302d2d',
+  },
+  Pending:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: '#F7CB73',
+    width: 50,
+    height: 50,
+    margin: 5,
   },
   Content: {
     width: '90%',

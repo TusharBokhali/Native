@@ -37,33 +37,45 @@ function Start() {
   let [I, setI] = useState(0);
   let [skipsa, setskips] = useState([])
   let [check, setCheck] = useState("")
+  let [skiarray,setskiarray] =useState([])
   let id = useRoute();
   let gets = async () => {
     try {
-      let values = Number(await AsyncStorage.getItem("Data"))
-      setCheck(values)
+      let valu = await AsyncStorage.getItem("Data") 
+      let values = JSON.parse(valu) 
+      setCheck(values.Current)
       let levelpages = id;
-      let value = (levelpages !== "") && (levelpages.params !== undefined) ? levelpages.params.name - 1 : values;
+      
+      if(values!==null){
+        let value = (levelpages !== "") && (levelpages.params !== undefined) ? levelpages.params.name - 1 : values.Current-1;
       setI(value)
+
+      }else{
+        let value = (levelpages !== "") && (levelpages.params !== undefined) ? levelpages.params.name - 1 : 0;
+      setI(value) 
+      }
+      setskips(values.Compalte)
+
     } catch (e) {
       console.log(e);
     }
   }
+  
   useEffect(() => {
     gets();
   }, [])
   const navigation = useNavigation();
 
   let LevelImages = [
-    { Url: p1, Ans: '10', Level: 'Level 1' },
-    { Url: p2, Ans: '25', Level: 'Level 2' },
-    { Url: p3, Ans: '6', Level: 'Level 3' },
-    { Url: p4, Ans: '4', Level: 'Level 4' },
-    { Url: p5, Ans: '128', Level: 'Level 5' },
-    { Url: p6, Ans: '6', Level: 'Level 6' },
-    { Url: p7, Ans: '50', Level: 'Level 7' },
-    { Url: p8, Ans: '1020', Level: 'Level 8' },
-    { Url: p9, Ans: '9', Level: 'Level 9' },
+    { Url: p1,  Ans: '10', Level: 'Level 1' },
+    { Url: p2,  Ans: '25', Level: 'Level 2' },
+    { Url: p3,  Ans: '6',  Level: 'Level 3' },
+    { Url: p4,  Ans: '4',  Level: 'Level 4' },
+    { Url: p5,  Ans: '128' , Level: 'Level 5' },
+    { Url: p6,  Ans: '6',  Level: 'Level 6' },
+    { Url: p7,  Ans: '50', Level: 'Level 7' },
+    { Url: p8,  Ans: '1020 ', Level: 'Level 8' },
+    { Url: p9,  Ans: '9',  Level: 'Level 9' },
     { Url: p10, Ans: '10', Level: 'Level 10' },
     { Url: p11, Ans: '11', Level: 'Level 11' },
     { Url: p12, Ans: '12', Level: 'Level 12' },
@@ -92,22 +104,30 @@ function Start() {
 
 
   let Enter = () => {
+    console.log(I);
+    
     if (value === LevelImages[I].Ans) {
       setI(I + 1)
+      let data = I + 1;     
+      let array = [...skipsa]
+      array.push(data)
+      
+      setskips(array)
+      let obj = {Complate:array , Current: data +1}
+      console.log(obj);
+      
+      let store = async (obj) => {
+         let ski = AsyncStorage.getItem("SKIP");
 
-      let data = I + 1;
-      let store = async (datas) => {
-        console.log(I);
-
-        if (check <= I || I == 0) {
+        if (check <= I || I == 0 && ski+1!=I) {
           try {
-            await AsyncStorage.setItem("Data", `${datas}`)
+            await AsyncStorage.setItem("Data", JSON.stringify(obj))
           } catch (error) {
             console.log(error)
           }
         }
       };
-      store(data)
+      store(obj)
       navigation.navigate('NextCenter')
     } else {
       alert("Answer Is Wrong!!")
@@ -118,20 +138,13 @@ function Start() {
 
   let Skip = () => {
     setI(I + 1);
-    let skips = I + 1;
-    let dub = [...skipsa];
-    setskips(dub)
-    dub.push(skips);
-    (async () => {
-      try {
-        await AsyncStorage.setItem("Skip", dub)
-      }
-      catch (e) {
-        console.log(e);
-      }
-    })();
+    let skip = [...skiarray];
+    skip.push(I+1)
+    setskiarray(skip)
+    AsyncStorage.setItem("SKIP",JSON.stringify(skip));
+  
   }
-
+ 
   return (
     <>
       <SafeAreaView style={style.continer} >
