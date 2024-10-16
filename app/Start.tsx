@@ -32,50 +32,62 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 let val = '';
 function Start() {
   let [value, setvalue] = useState('');
-  let [LVL, setLVL] = useState(0)
-  let [page, setpage] = useState(false)
   let [I, setI] = useState(0);
   let [skipsa, setskips] = useState([])
   let [check, setCheck] = useState("")
-  let [skiarray,setskiarray] =useState([])
+  let [skiarray, setskiarray] = useState([])
+  let [real, setreal] = useState([])
   let id = useRoute();
   let gets = async () => {
     try {
-      let valu = await AsyncStorage.getItem("Data") 
-      let values = JSON.parse(valu) 
+      let valu = await AsyncStorage.getItem("Data")
+      let repl = await AsyncStorage.getItem("SKIP");
+      let real = JSON.parse(repl);
+      setreal(real)
+      let values = JSON.parse(valu)
       setCheck(values.Current)
       let levelpages = id;
-      
-      if(values!==null){
-        let value = (levelpages !== "") && (levelpages.params !== undefined) ? levelpages.params.name - 1 : values.Current-1;
-      setI(value)
+      setskips(values.Complate)
 
-      }else{
-        let value = (levelpages !== "") && (levelpages.params !== undefined) ? levelpages.params.name - 1 : 0;
-      setI(value) 
+      console.log(values != null);
+
+      if (values !== null) {
+        let value = real != undefined ? Data.Current : (levelpages !== "") && (levelpages.params !== undefined) ? levelpages.params.name - 1 : values.Current - 1;
+        setI(value)
+        console.log("Values " + value);
+
+      } else {
+        let value = real != undefined ? Data.Current : (levelpages !== "") && (levelpages.params !== undefined) ? levelpages.params.name - 1 : 0;
+        setI(value)
       }
-      setskips(values.Compalte)
+      // console.log(values .Complate.includes(1));
+
+
 
     } catch (e) {
       console.log(e);
     }
   }
-  
+
+
+  // console.log("check::", I );
+
+
   useEffect(() => {
     gets();
   }, [])
   const navigation = useNavigation();
 
   let LevelImages = [
-    { Url: p1,  Ans: '10', Level: 'Level 1' },
-    { Url: p2,  Ans: '25', Level: 'Level 2' },
-    { Url: p3,  Ans: '6',  Level: 'Level 3' },
-    { Url: p4,  Ans: '4',  Level: 'Level 4' },
-    { Url: p5,  Ans: '128' , Level: 'Level 5' },
-    { Url: p6,  Ans: '6',  Level: 'Level 6' },
-    { Url: p7,  Ans: '50', Level: 'Level 7' },
-    { Url: p8,  Ans: '1020 ', Level: 'Level 8' },
-    { Url: p9,  Ans: '9',  Level: 'Level 9' },
+    { Url: p1, Ans: '10', Level: 'Level 1' },
+    { Url: p2, Ans: '25', Level: 'Level 2' },
+    { Url: p3, Ans: '6', Level: 'Level 3' },
+    { Url: p4, Ans: '4', Level: 'Level 4' },
+    { Url: p5, Ans: '128', Level: 'Level 5' },
+    { Url: p6, Ans: '6', Level: 'Level 6' },
+    { Url: p7, Ans: '50', Level: 'Level 7' },
+    { Url: p8, Ans: '1020 ', Level: 'Level 8' },
+    { Url: p9, Ans: '9', Level: 'Level 9' },
     { Url: p10, Ans: '10', Level: 'Level 10' },
     { Url: p11, Ans: '11', Level: 'Level 11' },
     { Url: p12, Ans: '12', Level: 'Level 12' },
@@ -105,21 +117,21 @@ function Start() {
 
   let Enter = () => {
     console.log(I);
-    
+
     if (value === LevelImages[I].Ans) {
       setI(I + 1)
-      let data = I + 1;     
+      let data = I + 1;
       let array = [...skipsa]
       array.push(data)
-      
-      setskips(array)
-      let obj = {Complate:array , Current: data +1}
-      console.log(obj);
-      
-      let store = async (obj) => {
-         let ski = AsyncStorage.getItem("SKIP");
 
-        if (check <= I || I == 0 && ski+1!=I) {
+      setskips(array)
+      let obj = { Complate: array, Current: data + 1 }
+      console.log(obj);
+
+      let store = async (obj) => {
+        let ski = AsyncStorage.getItem("SKIP");
+
+        if (check <= I || I == 0 && ski + 1 != I) {
           try {
             await AsyncStorage.setItem("Data", JSON.stringify(obj))
           } catch (error) {
@@ -139,12 +151,12 @@ function Start() {
   let Skip = () => {
     setI(I + 1);
     let skip = [...skiarray];
-    skip.push(I+1)
+    skip.push(I + 1)
     setskiarray(skip)
-    AsyncStorage.setItem("SKIP",JSON.stringify(skip));
-  
+    AsyncStorage.setItem("SKIP", JSON.stringify(skip));
+
   }
- 
+
   return (
     <>
       <SafeAreaView style={style.continer} >
@@ -160,6 +172,7 @@ function Start() {
                 <View style={style.member}>
                   <View>
                     <View>
+                      <Text>{console.log(skipsa)}</Text>
                     </View>
                     < View style={style.flex} >
                       <ImageBackground source={LVLLABEL} style={style.labelImage} resizeMode='stretch' >

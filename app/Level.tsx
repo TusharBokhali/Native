@@ -9,28 +9,32 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 let is = 0;
 function Level() {
   let [Data, setData] = useState([]);
-  let [space,setspace] = useState([])
+  let [space, setspace] = useState([])
   let getItems = async () => {
-    
+
     let object = await AsyncStorage.getItem("Data")
     let obj = JSON.parse(object)
-   
+    //  console.log(obj);
+
     let spaces = await AsyncStorage.getItem("SKIP")
     let real = JSON.parse(spaces)
-   setspace(real)
+    setspace(real)
     setData(obj)
   }
   useEffect(() => {
     getItems()
-  },[])
+  }, [])
   const navigation = useNavigation();
   let [up, setUp] = useState("")
   let dublicate = [];
   for (let i = 1; i <= 20; i++) {
     dublicate.push(i)
   }
+
   let [levele, setlevel] = useState(dublicate)
   let StartGame = (e) => {
+    console.log("el" +e);
+    console.log("Data" +Data.Current);
     
     if (e <= Data.Current) {
       let store = async (e) => {
@@ -41,7 +45,7 @@ function Level() {
         }
       };
       store(e);
-      navigation.navigate("Start", { name: e });
+      navigation.navigate("Start", { name: Data.Current});
     } else {
       alert("Level not Compalte!")
     }
@@ -53,13 +57,14 @@ function Level() {
           <FontAwesome5 name="backward" size={24} color="white" style={style.Back} onPress={() => { navigation.navigate('index') }} />
           <View style={style.Content}>
             <Text style={style.Heading}>Level</Text>
-               
+              {/* <Text>{console.log(space != '')}</Text> */}
             <View style={style.flex}>
               {
+          
                 levele.map((el, inx) => {
                   return (
                     <View key={inx}>
-                      <Pressable style={ style.button  }>
+                      <Pressable style={style.button}>
                         <Text style={style.text} onPress={() => { StartGame(el) }}>{el}</Text>
                       </Pressable>
                     </View>
@@ -85,7 +90,7 @@ const style = StyleSheet.create({
     height: '100%',
     backgroundColor: '#302d2d',
   },
-  Pending:{
+  Pending: {
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 4,
