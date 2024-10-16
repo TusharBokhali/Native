@@ -14,7 +14,7 @@ function Level() {
 
     let object = await AsyncStorage.getItem("Data")
     let obj = JSON.parse(object)
-    //  console.log(obj);
+    
 
     let spaces = await AsyncStorage.getItem("SKIP")
     let real = JSON.parse(spaces)
@@ -33,10 +33,12 @@ function Level() {
 
   let [levele, setlevel] = useState(dublicate)
   let StartGame = (e) => {
-    console.log("el" +e);
-    console.log("Data" +Data.Current);
+  
+    let see = Data !==null ? Data.Current :1;
+    console.log(see);
+    // console.log(see);
     
-    if (e <= Data.Current) {
+    if (e <= see) {
       let store = async (e) => {
         try {
           await AsyncStorage.setItem("Complate", e);
@@ -45,7 +47,7 @@ function Level() {
         }
       };
       store(e);
-      navigation.navigate("Start", { name: Data.Current});
+      navigation.navigate("Start", { name: e});
     } else {
       alert("Level not Compalte!")
     }
@@ -57,14 +59,14 @@ function Level() {
           <FontAwesome5 name="backward" size={24} color="white" style={style.Back} onPress={() => { navigation.navigate('index') }} />
           <View style={style.Content}>
             <Text style={style.Heading}>Level</Text>
-              {/* <Text>{console.log(space != '')}</Text> */}
+              {/* <Text>{console.log(space)}</Text> */}
             <View style={style.flex}>
               {
           
                 levele.map((el, inx) => {
                   return (
                     <View key={inx}>
-                      <Pressable style={style.button}>
+                      <Pressable style={(Data!==null && (Data.Current==el)) ? style.Pending : (space!==null ?   space.includes(el) :0) ? style.skip : ((Data !==null) && (Data.Complate!==undefined ) && (Data.Complate.includes(el))? style.active : style.button )  }>
                         <Text style={style.text} onPress={() => { StartGame(el) }}>{el}</Text>
                       </Pressable>
                     </View>

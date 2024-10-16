@@ -33,7 +33,7 @@ let val = '';
 function Start() {
   let [value, setvalue] = useState('');
   let [I, setI] = useState(0);
-  let [skipsa, setskips] = useState([])
+  let [skips, setskips] = useState([])
   let [check, setCheck] = useState("")
   let [skiarray, setskiarray] = useState([])
   let [real, setreal] = useState([])
@@ -43,34 +43,21 @@ function Start() {
       let valu = await AsyncStorage.getItem("Data")
       let repl = await AsyncStorage.getItem("SKIP");
       let real = JSON.parse(repl);
-      setreal(real)
       let values = JSON.parse(valu)
+      setreal(real)
+      setskips(real)
       setCheck(values.Current)
       let levelpages = id;
       setskips(values.Complate)
-
-      console.log(values != null);
-
-      if (values !== null) {
-        let value = real != undefined ? Data.Current : (levelpages !== "") && (levelpages.params !== undefined) ? levelpages.params.name - 1 : values.Current - 1;
+  
+        let value =  (levelpages !=="" && levelpages.params !== undefined) ? levelpages.params.name-1 : (values.Current !== "" && values.Current !=="" ) ? values.Current-1 : 0;
         setI(value)
-        console.log("Values " + value);
-
-      } else {
-        let value = real != undefined ? Data.Current : (levelpages !== "") && (levelpages.params !== undefined) ? levelpages.params.name - 1 : 0;
-        setI(value)
-      }
-      // console.log(values .Complate.includes(1));
-
-
-
     } catch (e) {
       console.log(e);
     }
   }
 
 
-  // console.log("check::", I );
 
 
   useEffect(() => {
@@ -115,13 +102,12 @@ function Start() {
   }
 
 
+  let array = [...skips]
   let Enter = () => {
-    console.log(I);
-
+   
     if (value === LevelImages[I].Ans) {
       setI(I + 1)
       let data = I + 1;
-      let array = [...skipsa]
       array.push(data)
 
       setskips(array)
@@ -148,12 +134,14 @@ function Start() {
     setvalue("")
   }
 
+  let skip = [...skiarray];
   let Skip = () => {
     setI(I + 1);
-    let skip = [...skiarray];
-    skip.push(I + 1)
-    setskiarray(skip)
-    AsyncStorage.setItem("SKIP", JSON.stringify(skip));
+    if(skips==undefined || (skips.Complate!=undefined) ?(skips.Complate.includes(I+1)) : ''){
+      skip.push(I + 1)
+      setskiarray(skip)
+      AsyncStorage.setItem("SKIP", JSON.stringify(skip));
+    }
 
   }
 
@@ -172,7 +160,6 @@ function Start() {
                 <View style={style.member}>
                   <View>
                     <View>
-                      <Text>{console.log(skipsa)}</Text>
                     </View>
                     < View style={style.flex} >
                       <ImageBackground source={LVLLABEL} style={style.labelImage} resizeMode='stretch' >
