@@ -9,8 +9,7 @@ const Settings = () => {
     const navigation = useNavigation();
 
     let Reset = () =>{
-        (async ()=>{
-            let per = confirm("Game Reset Sure!");
+        ( ()=>{
             Alert.alert(
                 'Confirm',
                 'Are you sure you want to do this?',
@@ -32,18 +31,7 @@ const Settings = () => {
                 ],
                 { cancelable: false }
               );
-            // }
-            if(per)
-                {
-                try{
-                    AsyncStorage.clear(); 
-                    alert("Game Success Fully Reset!");
-                }catch(e){
-                    console.log(e);   
-                }
-            }else{
-                alert("Game Not Reset!")
-            }
+          
         })();
     }
     return (

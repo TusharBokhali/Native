@@ -35,7 +35,8 @@ function Start() {
   let [I, setI] = useState(0);
   let [skips, setskips] = useState([])
   let [check, setCheck] = useState("")
-  let [skiarray, setskiarray] = useState([])
+  let [Complates, setComp] = useState([])
+
   let [real, setreal] = useState([])
   let id = useRoute();
   let gets = async () => {
@@ -45,17 +46,34 @@ function Start() {
       let real = JSON.parse(repl);
       let values = JSON.parse(valu)
       setreal(real)
-      setskips(real)
-      setCheck(values.Current)
+      // console.log(real);
+      if (real !== null) {
+        setskips(real)
+      } else {
+        setskips('')
+
+      }
+      console.log("values", valu);
+
+      if (values !== undefined) {
+        setCheck(values.Current)
+        setComp(values.Complate)
+      } else {
+        values.Current = 1;
+      }
       let levelpages = id;
-      setskips(values.Complate)
-  
-        let value =  (levelpages !=="" && levelpages.params !== undefined) ? levelpages.params.name-1 : (values.Current !== "" && values.Current !=="" ) ? values.Current-1 : 0;
-        setI(value)
+      // setskips(values.Complate)
+
+      let value = (levelpages !== "" && levelpages.params !== undefined) ? levelpages.params.name - 1 : (values.Current !== "" && values.Current !== "") ? values.Current - 1 : 0;
+      setI(value)
+      console.log("Check::" + value);
+
+
     } catch (e) {
       console.log(e);
     }
   }
+  console.log("I Values Get " + I);
 
 
 
@@ -69,7 +87,7 @@ function Start() {
     { Url: p1, Ans: '10', Level: 'Level 1' },
     { Url: p2, Ans: '25', Level: 'Level 2' },
     { Url: p3, Ans: '6', Level: 'Level 3' },
-    { Url: p4, Ans: '4', Level: 'Level 4' },
+    { Url: p4, Ans: '14', Level: 'Level 4' },
     { Url: p5, Ans: '128', Level: 'Level 5' },
     { Url: p6, Ans: '6', Level: 'Level 6' },
     { Url: p7, Ans: '50', Level: 'Level 7' },
@@ -102,24 +120,25 @@ function Start() {
   }
 
 
-  let array = [...skips]
+  let array = [...Complates]
   let Enter = () => {
-   
+
     if (value === LevelImages[I].Ans) {
       setI(I + 1)
       let data = I + 1;
       array.push(data)
 
-      setskips(array)
       let obj = { Complate: array, Current: data + 1 }
-      console.log(obj);
+
 
       let store = async (obj) => {
         let ski = AsyncStorage.getItem("SKIP");
 
-        if (check <= I || I == 0 && ski + 1 != I) {
+        if (check <= I + 1 || I == 0 || id.params == I) {
+
           try {
             await AsyncStorage.setItem("Data", JSON.stringify(obj))
+            setComp(array)
           } catch (error) {
             console.log(error)
           }
@@ -133,13 +152,14 @@ function Start() {
     val = '';
     setvalue("")
   }
+  console.log(Complates);
 
-  let skip = [...skiarray];
   let Skip = () => {
+    let skip = [...skips];
     setI(I + 1);
-    if(skips==undefined || (skips.Complate!=undefined) ?(skips.Complate.includes(I+1)) : ''){
+    if (skips !== null && !Complates.includes(I + 1)) {
       skip.push(I + 1)
-      setskiarray(skip)
+      setskips(skip)
       AsyncStorage.setItem("SKIP", JSON.stringify(skip));
     }
 

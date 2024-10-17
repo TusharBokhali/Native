@@ -31,9 +31,13 @@ function Level() {
     dublicate.push(i)
   }
 
+  if(Data==null){
+    let get = {Complate:'',Current:1}
+    setData(get)
+  }
   let [levele, setlevel] = useState(dublicate)
   let StartGame = (e) => {
-  
+ 
     let see = Data !==null ? Data.Current :1;
     console.log(see);
     // console.log(see);
@@ -59,7 +63,7 @@ function Level() {
           <FontAwesome5 name="backward" size={24} color="white" style={style.Back} onPress={() => { navigation.navigate('index') }} />
           <View style={style.Content}>
             <Text style={style.Heading}>Level</Text>
-              {/* <Text>{console.log(space)}</Text> */}
+              {/* <Text>{console.log( (Data.Current=='1'))}</Text> */}
             <View style={style.flex}>
               {
           

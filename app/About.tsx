@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView,StatusBar } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, StatusBar } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         backgroundColor: '#444343',
-        padding:20,
+        padding: 20,
     },
     main: {
         color: 'white',
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         width: '100%',
         // height:'80%',
         marginTop: 30,
-        paddingBottom:50,
+        paddingBottom: 50,
         marginHorizontal: 'auto'
     },
     Text: {
