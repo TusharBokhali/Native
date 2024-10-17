@@ -36,10 +36,11 @@ function Level() {
     setData(get)
   }
   let [levele, setlevel] = useState(dublicate)
+
   let StartGame = (e) => {
  
     let see = Data !==null ? Data.Current :1;
-    console.log(see);
+    
     // console.log(see);
     
     if (e <= see) {

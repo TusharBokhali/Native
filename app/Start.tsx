@@ -36,11 +36,13 @@ function Start() {
   let [skips, setskips] = useState([])
   let [check, setCheck] = useState("")
   let [Complates, setComp] = useState([])
+  let getskip = 0;
 
   let [real, setreal] = useState([])
   let id = useRoute();
   let gets = async () => {
     try {
+      // AsyncStorage.clear()
       let valu = await AsyncStorage.getItem("Data")
       let repl = await AsyncStorage.getItem("SKIP");
       let real = JSON.parse(repl);
@@ -53,21 +55,39 @@ function Start() {
         setskips('')
 
       }
-      console.log("values", valu);
+      // console.log("values", valu);
 
       if (values !== undefined) {
         setCheck(values.Current)
         setComp(values.Complate)
+        // setskips(values.Complate)
       } else {
         values.Current = 1;
       }
       let levelpages = id;
-      // setskips(values.Complate)
 
       let value = (levelpages !== "" && levelpages.params !== undefined) ? levelpages.params.name - 1 : (values.Current !== "" && values.Current !== "") ? values.Current - 1 : 0;
       setI(value)
-      console.log("Check::" + value);
-
+      if (real !== null) {
+        
+        let biggest = Math.max(...real)  
+        
+        // console.log("shooot"+);
+        if (biggest >= values.Current) {
+          console.log(Complates);
+          
+          let shout = { "Complate": Complates, "Current": biggest }
+          setI(biggest)
+          let exi = async ( shout ) => {
+            try {
+              await AsyncStorage.setItem("Data", JSON.stringify(shout))
+            } catch (e) {
+              console.log(e);
+            }
+          };
+          exi(shout)
+        };
+      }
 
     } catch (e) {
       console.log(e);
@@ -110,13 +130,27 @@ function Start() {
     navigation.navigate("Congration")
   }
   let ValueSet = (el) => {
+    console.log("Click "+value);
+    console.log("el "+el);
+    console.log("val "+val);
+    
     val += el;
     setvalue(val);
   }
 
   let cleaner = () => {
-    val = '';
-    setvalue("");
+    
+    let set = value.split('')
+    console.log(set.length);
+    
+    if(set.length-1){
+      let ser = set.pop()
+      let get = set.join("")
+      setvalue(get);
+    }else{
+      setvalue('')
+      val='';
+    }
   }
 
 
