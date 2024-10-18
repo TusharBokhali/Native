@@ -10,14 +10,26 @@ let is = 0;
 function Level() {
   let [Data, setData] = useState([]);
   let [space, setspace] = useState([])
+  let [num,setnum] = useState()
   let getItems = async () => {
 
     let object = await AsyncStorage.getItem("Data")
     let obj = JSON.parse(object)
-    
+
 
     let spaces = await AsyncStorage.getItem("SKIP")
     let real = JSON.parse(spaces)
+
+    if(real!==null){
+
+      let set = Math.max(...real)+1
+      console.log("SET " + (set + 1));
+      
+      if (set >= obj.Current) {
+        setnum(set)
+      }
+    }
+    
     setspace(real)
     setData(obj)
   }
@@ -31,30 +43,30 @@ function Level() {
     dublicate.push(i)
   }
 
-  if(Data==null){
-    let get = {Complate:'',Current:1}
+  if (Data == null) {
+    let get = { Complate: '', Current: 1 }
     setData(get)
   }
   let [levele, setlevel] = useState(dublicate)
 
   let StartGame = (e) => {
- 
-    let see = Data !==null ? Data.Current :1;
-    
+
+    let see = Data !== null ? Data.Current : 1;
+
     // console.log(see);
-    
+
     if (e <= see) {
       let store = async (e) => {
         try {
-          await AsyncStorage.setItem("Complate", e);
+          await AsyncStorage.setItem("Complate", JSON.stringify(e));
         } catch (error) {
           console.log(error)
         }
       };
       store(e);
-      navigation.navigate("Start", { name: e});
+      navigation.navigate("Start", { name: e });
     } else {
-      alert("Level not Compalte!")
+      alert("Level not Complete!")
     }
   }
   return (
@@ -64,14 +76,14 @@ function Level() {
           <FontAwesome5 name="backward" size={24} color="white" style={style.Back} onPress={() => { navigation.navigate('index') }} />
           <View style={style.Content}>
             <Text style={style.Heading}>Level</Text>
-              {/* <Text>{console.log( (Data.Current=='1'))}</Text> */}
+            {/* <Text>{console.log( (Data.Current=='1'))}</Text> */}
             <View style={style.flex}>
               {
-          
+
                 levele.map((el, inx) => {
                   return (
                     <View key={inx}>
-                      <Pressable style={(Data!==null && (Data.Current==el)) ? style.Pending : (space!==null ?   space.includes(el) :0) ? style.skip : ((Data !==null) && (Data.Complate!==undefined ) && (Data.Complate.includes(el))? style.active : style.button )  }>
+                      <Pressable style={(Data !== null && (Data.Current == el)) ? style.Pending : (space !== null ? space.includes(el) : 0) ? style.skip : ((Data !== null) && (Data.Complate !== undefined) && (Data.Complate.includes(el)) ? style.active : style.button)}>
                         <Text style={style.text} onPress={() => { StartGame(el) }}>{el}</Text>
                       </Pressable>
                     </View>

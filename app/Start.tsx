@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Pressable, TextInput, Image, ImageBackground } from 'react-native';
+import { Text, View, StyleSheet, Pressable, TextInput, Image, ImageBackground, RefreshControl, RefreshControlComponent } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useEffect, useState } from 'react';
@@ -25,7 +25,7 @@ import p20 from '@/assets/images/p20.png'
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Back from '../assets/images/gameplaybackground.jpg'
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { Link, useNavigation, useRoute } from '@react-navigation/native';
 import LVLLABEL from '../assets/images/level_board.png'
 import { Routes } from 'react-router-dom';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -47,6 +47,8 @@ function Start() {
       let repl = await AsyncStorage.getItem("SKIP");
       let real = JSON.parse(repl);
       let values = JSON.parse(valu)
+     
+      
       setreal(real)
       // console.log(real);
       if (real !== null) {
@@ -71,21 +73,15 @@ function Start() {
       if (real !== null) {
         
         let biggest = Math.max(...real)  
+      
         
-        // console.log("shooot"+);
         if (biggest >= values.Current) {
-          console.log(Complates);
+         
+          let store = [...values.Complate]
           
-          let shout = { "Complate": Complates, "Current": biggest }
+          let shout = { "Complate": store, "Current": biggest+1 }
           setI(biggest)
-          let exi = async ( shout ) => {
-            try {
-              await AsyncStorage.setItem("Data", JSON.stringify(shout))
-            } catch (e) {
-              console.log(e);
-            }
-          };
-          exi(shout)
+          await AsyncStorage.setItem("Data", JSON.stringify(shout))
         };
       }
 
@@ -93,14 +89,10 @@ function Start() {
       console.log(e);
     }
   }
-  console.log("I Values Get " + I);
-
-
-
 
   useEffect(() => {
     gets();
-  }, [])
+  }, [],[I])
   const navigation = useNavigation();
 
   let LevelImages = [
@@ -126,14 +118,14 @@ function Start() {
     { Url: p20, Ans: '20', Level: 'Level 20' },
   ];
 
-  if (I === LevelImages.length - 1) {
+  if (I === LevelImages.length ) {
     navigation.navigate("Congration")
+    I=19;
   }
+  console.log("I "+I);
+  
   let ValueSet = (el) => {
-    console.log("Click "+value);
-    console.log("el "+el);
-    console.log("val "+val);
-    
+  
     val += el;
     setvalue(val);
   }
@@ -141,12 +133,13 @@ function Start() {
   let cleaner = () => {
     
     let set = value.split('')
-    console.log(set.length);
+
     
     if(set.length-1){
       let ser = set.pop()
       let get = set.join("")
       setvalue(get);
+    
     }else{
       setvalue('')
       val='';
@@ -156,6 +149,29 @@ function Start() {
 
   let array = [...Complates]
   let Enter = () => {
+
+    if(real!==null){
+     let checks =  real.includes(I+1);
+     
+
+     if(checks){
+       
+       if(value=== LevelImages[I].Ans){
+           alert("HEllo")
+           let inx = real.indexOf(I+1)
+           let data = [...Complates]
+           real.splice(inx,inx+1,1);
+           let go = async(data)=>{
+             data.push(I+1)
+             
+             await AsyncStorage.setItem("SKIP", JSON.stringify(real));
+             await AsyncStorage.setItem("Data", JSON.stringify(data))
+             
+            }
+            go(data)
+          }
+        }
+    }
 
     if (value === LevelImages[I].Ans) {
       setI(I + 1)
@@ -186,7 +202,7 @@ function Start() {
     val = '';
     setvalue("")
   }
-  console.log(Complates);
+
 
   let Skip = () => {
     let skip = [...skips];
@@ -196,6 +212,10 @@ function Start() {
       setskips(skip)
       AsyncStorage.setItem("SKIP", JSON.stringify(skip));
     }
+    
+    
+    navigation.navigate("Start")
+    
 
   }
 
@@ -227,7 +247,7 @@ function Start() {
                     </View>
                   </View>
                   < View style={style.input} >
-                    <TextInput style={style.inputs} placeholder='Enter' keyboardType="numeric" value={value} maxLength={5} />
+                    <TextInput style={style.inputs} placeholder='Enter' showSoftInputOnFocus={false} keyboardType="numeric" value={value} maxLength={5} />
                     <View style={style.fixContent}>
                       <Pressable>
                         <Text style={style.Buttons} onPress={() => { ValueSet('9') }}> 9 </Text>
